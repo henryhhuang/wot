@@ -1,4 +1,4 @@
-import data from "../../mock/workout.json";
+import data from "../../mock/workouts.json";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from '@mui/material/Paper';
@@ -11,6 +11,14 @@ import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ExerciseTable from "../ExerciseTable/ExerciseTable";
+
+
+type Workout = {
+    id: number,
+    name: string,
+    date: string,
+    exercises: string[]
+}
 
 const bull = (
     <Box
@@ -47,7 +55,7 @@ const Exercise: React.FC = () => {
         justifyContent="center"
         alignItems="center"
         >
-            {data.map((workout: any) => (
+            {data.map((workout: Workout) => (
                 <Card sx={{ minWidth: 275, padding:"10px", width:"74%", marginRight:"10vh", marginLeft:"10vh"}}>
                     <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -57,10 +65,10 @@ const Exercise: React.FC = () => {
                         {workout.name}
                         </Typography>
                         <Typography variant="body2">
-                            {workout.exercises.map((exercise: any) => (
+                            {workout.exercises.map((name: string) => (
                             <Typography variant="body2">
                                 {bull}
-                                {exercise.name}
+                                {name}
                             </Typography>
                             ))}
                         </Typography>
@@ -77,7 +85,7 @@ const Exercise: React.FC = () => {
                     sx: { height: "80%" },
                   }}
             >
-                <ExerciseTable name={data[0].exercises[0].name} sets={data[0].exercises[0].sets}/>
+                <ExerciseTable name="placeholder" sets={[{"weight" : 1, "reps": 1}]}/>
             </Drawer>
         </Box>
     )

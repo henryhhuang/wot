@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    },
+    {
+        "id": 2,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    },
+    {
+        "id": 3,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    },
+    {
+        "id": 4,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    },
+    {
+        "id": 5,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    },
+    {
+        "id": 6,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    },
+    {
+        "id": 7,
+        "name": "Chest + Tricep 1",
+        "date": "2023-05-6",
+        "exercises": ["Barbell Bench Press", "Incline Bench Press", "Machine Chest Flys", "Tricep Pulldown", "Dips"]
+    }
+]

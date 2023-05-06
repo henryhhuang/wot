@@ -1,0 +1,140 @@
+[
+    {
+        "id": 1,
+        "workoutId": 1,
+        "name": "Machine Chest Flys",
+        "sets" : [
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "workoutId": 1,
+        "name": "Machine Chest Flys",
+        "sets" : [
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "workoutId": 1,
+        "name": "Machine Chest Flys",
+        "sets" : [
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "workoutId": 1,
+        "name": "Machine Chest Flys",
+        "sets" : [
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "workoutId": 1,
+        "name": "Machine Chest Flys",
+        "sets" : [
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "workoutId": 1,
+        "name": "Machine Chest Flys",
+        "sets" : [
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            },
+            {
+                "weight": 100,
+                "reps": 8
+            }
+        ]
+    }
+]
