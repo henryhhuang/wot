@@ -1,0 +1,481 @@
+[
+    {
+        "name": "chest 1 chest 1 chest 1 chest 1 chest 1chest 1chest 1chest 1",
+        "exercises": [
+            {
+                "name": "barbell bench press",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 115,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 135,
+                        "reps": 6
+                    },
+                    {
+                        "weight": 125,
+                        "reps": 6
+                    }
+                ] 
+            },
+            {
+                "name": "machine chest fly",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 110,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 110,
+                        "reps": 7
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 6
+                    }
+                ]
+            },
+            {
+                "name": "shoulder press machine",
+                "group": "shoulders",
+                "sets": [
+                    {
+                        "weight": 70,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 90,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 8
+                    }
+                ]
+            },
+            {
+                "name": "tricep focused dips",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "name": "tricep pulldown",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    }
+                ]
+            }
+        ],
+        "date": "2023-04-26"
+    },
+    {
+        "name": "chest 1",
+        "exercises": [
+            {
+                "name": "barbell bench press",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 115,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 135,
+                        "reps": 6
+                    },
+                    {
+                        "weight": 125,
+                        "reps": 6
+                    }
+                ] 
+            },
+            {
+                "name": "machine chest fly",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 110,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 110,
+                        "reps": 7
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 6
+                    }
+                ]
+            },
+            {
+                "name": "shoulder press machine",
+                "group": "shoulders",
+                "sets": [
+                    {
+                        "weight": 70,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 90,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 8
+                    }
+                ]
+            },
+            {
+                "name": "tricep focused dips",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "name": "tricep pulldown",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    }
+                ]
+            }
+        ],
+        "date": "2023-04-26"
+    },
+    {
+        "name": "chest 1",
+        "exercises": [
+            {
+                "name": "barbell bench press",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 115,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 135,
+                        "reps": 6
+                    },
+                    {
+                        "weight": 125,
+                        "reps": 6
+                    }
+                ] 
+            },
+            {
+                "name": "machine chest fly",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 110,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 110,
+                        "reps": 7
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 6
+                    }
+                ]
+            },
+            {
+                "name": "shoulder press machine",
+                "group": "shoulders",
+                "sets": [
+                    {
+                        "weight": 70,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 90,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 8
+                    }
+                ]
+            },
+            {
+                "name": "tricep focused dips",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "name": "tricep pulldown",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    }
+                ]
+            }
+        ],
+        "date": "2023-04-26"
+    },    {
+        "name": "chest 1",
+        "exercises": [
+            {
+                "name": "barbell bench press",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 115,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 135,
+                        "reps": 6
+                    },
+                    {
+                        "weight": 125,
+                        "reps": 6
+                    }
+                ] 
+            },
+            {
+                "name": "machine chest fly",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 110,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 110,
+                        "reps": 7
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 6
+                    }
+                ]
+            },
+            {
+                "name": "shoulder press machine",
+                "group": "shoulders",
+                "sets": [
+                    {
+                        "weight": 70,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 90,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 8
+                    }
+                ]
+            },
+            {
+                "name": "tricep focused dips",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "name": "tricep pulldown",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    }
+                ]
+            }
+        ],
+        "date": "2023-04-26"
+    }
+    ,    {
+        "name": "chest 1",
+        "exercises": [
+            {
+                "name": "barbell bench press",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 115,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 135,
+                        "reps": 6
+                    },
+                    {
+                        "weight": 125,
+                        "reps": 6
+                    }
+                ] 
+            },
+            {
+                "name": "machine chest fly",
+                "group": "CHEST",
+                "sets": [
+                    {
+                        "weight": 110,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 110,
+                        "reps": 7
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 6
+                    }
+                ]
+            },
+            {
+                "name": "shoulder press machine",
+                "group": "shoulders",
+                "sets": [
+                    {
+                        "weight": 70,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 90,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 100,
+                        "reps": 8
+                    }
+                ]
+            },
+            {
+                "name": "tricep focused dips",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "name": "tricep pulldown",
+                "group": "triceps",
+                "sets": [
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    },
+                    {
+                        "weight": 30,
+                        "reps": 8
+                    }
+                ]
+            }
+        ],
+        "date": "2023-04-26"
+    }
+]
