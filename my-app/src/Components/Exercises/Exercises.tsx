@@ -10,11 +10,12 @@ import Container from "@mui/material/Container";
 import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
+import ExerciseTable from "../ExerciseTable/ExerciseTable";
 
 const bull = (
     <Box
         component="span"
-        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)'}}
     >
         •
     </Box>
@@ -38,17 +39,6 @@ const Exercise: React.FC = () => {
 
         setState({ ...state, ['drawer']: open });
     };
-
-    const moreInfo = () => (
-        <Box
-          sx={{ 'auto' : 250 }}
-          role="presentation"
-          onClick={toggleDrawer(false)}
-          onKeyDown={toggleDrawer(false)}
-        >
-            More info later
-        </Box>
-      );
 
     return (
         <Box
@@ -82,8 +72,12 @@ const Exercise: React.FC = () => {
                 anchor="bottom"
                 open={state['drawer']}
                 onClose={toggleDrawer(false)}
+                sx={{minHeight: "100vh"}}
+                PaperProps={{
+                    sx: { height: "80%" },
+                  }}
             >
-                {moreInfo()}
+                <ExerciseTable name={data[0].exercises[0].name} sets={data[0].exercises[0].sets}/>
             </Drawer>
         </Box>
     )
