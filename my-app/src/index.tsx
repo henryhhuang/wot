@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Exercise from './Components/Exercises/Exercises';
 import WOTDrawer from './Components/Drawer/WOTDrawer';
+import CreateWorkout from './Components/CreateWorkout/CreateWorkout';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Exercise />,
+  },
+  {
+    path: "/create",
+    element: <CreateWorkout />,
   },
 ]);
 

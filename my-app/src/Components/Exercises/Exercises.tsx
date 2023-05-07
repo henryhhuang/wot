@@ -11,6 +11,7 @@ import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ExerciseTable from "../ExerciseTable/ExerciseTable";
+import CardActionArea from '@mui/material/CardActionArea';
 
 
 type Workout = {
@@ -49,45 +50,59 @@ const Exercise: React.FC = () => {
     };
 
     return (
-        <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
+        <Container 
+            component="main" 
+            maxWidth="xs"
+            sx = {{
+                backgroundColor: '#fff'
+            }}
+        
         >
-            {data.map((workout: Workout) => (
-                <Card sx={{ minWidth: 275, padding:"10px", width:"74%", marginRight:"10vh", marginLeft:"10vh"}}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        {workout.date}
-                        </Typography>
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {workout.name}
-                        </Typography>
-                        <Typography variant="body2">
-                            {workout.exercises.map((name: string) => (
-                            <Typography variant="body2">
-                                {bull}
-                                {name}
-                            </Typography>
-                            ))}
-                        </Typography>
-                        <Button onClick={toggleDrawer(true)}>OPEN</Button>
-                    </CardContent>
-                </Card>
-            ))}
-            <Drawer
-                anchor="bottom"
-                open={state['drawer']}
-                onClose={toggleDrawer(false)}
-                sx={{minHeight: "100vh"}}
-                PaperProps={{
-                    sx: { height: "80%" },
-                  }}
+            <Box
+                sx={{
+                    marginTop: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
             >
+            <Grid container spacing={2}>
+                {data.map((workout: Workout) => (
+                    <Grid item xs={12}>
+                        <CardActionArea component="a" href="#" onClick={toggleDrawer(true)}>
+                            <Card sx={{ minWidth: 275, boxShadow: 1, border: 1, borderRadius: '10px', borderColor: 'secondary.main' }}>
+                                <CardContent>
+                                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                                    {workout.date}
+                                    </Typography>
+                                    <Typography component="h1" variant="h6" sx={{ mb: 1.5 }}>
+                                    {workout.name}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        {workout.exercises.map((name: string) => (
+                                        <Typography variant="body1">
+                                            {bull}
+                                            {name}
+                                        </Typography>
+                                        ))}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </CardActionArea>
+                    </Grid>
+                ))}
+                </Grid>
+                <Drawer
+                    anchor="bottom"
+                    open={state['drawer']}
+                    onClose={toggleDrawer(false)}
+                    PaperProps={{
+                    sx: { height: "80%" },
+                }}>
                 <ExerciseTable name="placeholder" sets={[{"weight" : 1, "reps": 1}]}/>
             </Drawer>
         </Box>
+        </Container>
     )
 }
 
