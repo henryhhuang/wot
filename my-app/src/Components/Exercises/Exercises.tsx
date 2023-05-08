@@ -7,12 +7,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Container from "@mui/material/Container";
-import React from 'react';
+import React, { useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ExerciseTable from "../ExerciseTable/ExerciseTable";
 import CardActionArea from '@mui/material/CardActionArea';
-
 
 type Workout = {
     id: number,
@@ -30,10 +29,55 @@ const bull = (
     </Box>
 );
 
+const getWorkouts = async () => {
+    await fetch(`http://localhost:5200/workouts/`)
+}
+
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    
+    //TODO: refactor to a module
+    await fetch(`http://localhost:5200/workouts/`, {
+        method: "POST",
+        body: JSON.stringify({
+            name: data.get('workoutName'),
+            date: new Date(),
+            exercises: [data.get('exercises')]
+        }),
+        headers: {
+            "Content-Type": 'application/json'
+        },
+    })
+}
+
+
 const Exercise: React.FC = () => {
     const [state, setState] = React.useState({
         drawer: false
     });
+
+    const [workouts, setWorkouts] = React.useState([]);
+
+    useEffect(() => {
+        async function getWorkouts() {
+            const response = await fetch(`http://localhost:5200/workouts/`);
+
+            if (!response.ok) {
+                //TODO error response
+                console.log(`error: ${response.statusText}`);
+                return;
+            }
+            
+            const workouts = await response.json();
+            setWorkouts(workouts);
+        }
+
+        getWorkouts();
+
+        return;
+    }, [workouts.length])
+
 
     const toggleDrawer =
         (open: boolean) =>
@@ -67,7 +111,7 @@ const Exercise: React.FC = () => {
                 }}
             >
             <Grid container spacing={2}>
-                {data.map((workout: Workout) => (
+                {workouts.map((workout: Workout) => (
                     <Grid item xs={12}>
                         <CardActionArea component="a" href="#" onClick={toggleDrawer(true)}>
                             <Card sx={{ minWidth: 275, boxShadow: 1, border: 1, borderRadius: '10px', borderColor: 'secondary.main' }}>

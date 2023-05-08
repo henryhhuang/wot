@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import { connectToDatabase } from "./src/db/database";
 import { workoutRouter } from "./src/routes/workout";
+import { exerciseRouter } from "./src/routes/exercise";
 
 dotenv.config();
 
@@ -15,14 +16,15 @@ if (!ATLAS_URI) {
  
  connectToDatabase(ATLAS_URI)
    .then(() => {
-       const app = express();
-       app.use(cors());
+        const app = express();
+        app.use(cors());
 
-       app.use("/workouts", workoutRouter);
-
-       app.listen(5200, () => {
-           console.log(`Server running at http://localhost:5200...`);
-       });
+        app.use("/workouts", workoutRouter);
+        app.use("/exercises", exerciseRouter);
+        
+        app.listen(5200, () => {
+            console.log(`Server running at http://localhost:5200...`);
+        });
  
    })
    .catch(error => console.error(error));

@@ -1,8 +1,10 @@
 import * as mongodb from "mongodb";
 import { Workout } from "../models/workout";
+import { Exercise } from "../models/exercise";
 
 export const collections: {
     workouts?: mongodb.Collection<Workout>;
+    exercises?: mongodb.Collection<Exercise>;
 } = {};
 
 // https://www.mongodb.com/blog/post/json-schema-validation--locking-down-your-model-the-smart-way
@@ -15,9 +17,13 @@ export async function connectToDatabase(uri: string) {
     await applySchemaValidation(db);
   
     const workoutCollections = db.collection<Workout>("workouts");
+    const exerciseCollections = db.collection<Exercise>("exercises");
     collections.workouts = workoutCollections;
+    collections.exercises = exerciseCollections;
  }
 
+
+//TODO: refactor
 async function applySchemaValidation(db: mongodb.Db) {
     const jsonSchema = {
         $jsonSchema: {
@@ -28,7 +34,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                 _id: {},
                 name: {
                     bsonType: "string",
-                    description: "'string' is required and is a string",
+                    description: "'name' is required and is a string",
                 },
                 date: {
                     bsonType: "date",
@@ -45,12 +51,41 @@ async function applySchemaValidation(db: mongodb.Db) {
         }
     }
 
+    const exerciseJsonSchema = {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["name"],
+            properties: {
+                _id: {},
+                name: {
+                    bsonType: "string",
+                    description: "'name' is required and is a string",
+                },
+                type: {
+                    bsonType: "string"
+                }
+            }
+        }
+    }
+
     await db.command({
         collMod: "workouts",
-        validator: jsonSchema
+        validator: jsonSchema,
+        validationAction: "warn"
     }).catch(async (error: mongodb.MongoServerError) => {
         if (error.codeName === 'NamespaceNotFound') {
             await db.createCollection("workouts", {validator: jsonSchema});
         }
     });
+
+    await db.command({
+        collMod: "exercises",
+        validator: exerciseJsonSchema,
+        validationAction: "warn"
+    }).catch(async (error: mongodb.MongoServerError) => {
+        if (error.codeName === 'NamespaceNotFound') {
+            await db.createCollection("exercises", {validator: exerciseJsonSchema});
+        }
+    });
 }
+

@@ -5,16 +5,54 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
+import Autocomplete from '@mui/material/Autocomplete';
+import Chip from '@mui/material/Chip';
+
+type Exercise = {
+    id?: number,
+    name: string,
+    type?: string
+}
 
 const CreateWorkout: React.FC = () => {
+    const [values, setValues] = React.useState<any>([]);
+    const [exercises, setExercises] = React.useState<Exercise[]>([]);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    React.useEffect(() => {
+        async function getExercises() {
+            const response = await fetch(`http://localhost:5200/exercises/`);
+
+            if (!response.ok) {
+                //TODO error response
+                console.log(`error: ${response.statusText}`);
+                return;
+            }
+            
+            const exercises = await response.json();
+            setExercises(exercises);
+        }
+
+        getExercises();
+
+        return;
+    }, [exercises.length])
+
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            name: data.get('workoutName'),
-            date: "date",
-            exercises: data.get('exercises')
+        
+        // TODO: refactor to a module
+        await fetch(`http://localhost:5200/workouts/`, {
+            method: "POST",
+            body: JSON.stringify({
+                name: data.get('workoutName'),
+                date: new Date(),
+                exercises: values
+            }),
+            headers: {
+                "Content-Type": 'application/json'
+            },
         })
     }
 
@@ -31,7 +69,7 @@ const CreateWorkout: React.FC = () => {
                 <Typography component="h1" variant="h5">
                     Create a Workout
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3}}>
+                <Box component="form" width="100%" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField 
@@ -44,13 +82,56 @@ const CreateWorkout: React.FC = () => {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField 
-                                name="exercises"
-                                required
-                                fullWidth
-                                id="exercises"
-                                label="Excercises"
-                                autoFocus
+                            <Autocomplete
+                            multiple
+                            freeSolo
+                            disablePortal
+                            fullWidth
+                            disableClearable
+                            clearOnBlur
+                            id="exercises"
+                            value={values}
+                            //TODO: handle duplicates
+                            onChange={(event, newValue) => {          
+                                let addedValue = newValue.slice(-1)[0];
+                                console.log(addedValue);
+                                if (addedValue && typeof addedValue === "string") {
+                                    setValues((prevValues: any) => [...prevValues, {
+                                        name: addedValue,
+                                    }])  
+                                } else if (addedValue) {
+                                    setValues((prevValues: any) => [...prevValues, addedValue])                              
+                                }
+
+                            }}
+                            //TODO: probably a better way to do this
+                            // onChange={(event, newValue) => {
+                            //     setValues(prevValues => [...prevValues, newValue.slice(-1)[0]])
+                            //   }}
+                            options={exercises}
+                            getOptionLabel={(option) => {
+                                // Value selected with enter, right from the input
+                                if (typeof option === 'string') {
+                                  return option;
+                                }      
+                                // Regular option
+                                return option.name;
+                              }}
+                            renderTags={(values: Exercise[], getTagProps) =>
+                                values.map((option: Exercise, index: number) => (
+                                  <Chip variant="outlined" label={option.name} {...getTagProps({ index })} 
+                                    onDelete={() => {
+                                        setValues(values.filter(entry => entry.name !== option.name));
+                                  }} />
+                                ))}                     
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    fullWidth
+                                    autoFocus
+                                    label="Exercises"
+                                />
+                                )}  
                             />
                         </Grid>
                     </Grid>

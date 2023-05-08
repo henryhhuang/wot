@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as mongodb from "mongodb";
+import { Exercise } from "../models/exercise";
 import { collections } from "../db/database";
 
 export const workoutRouter = express.Router();
@@ -17,6 +18,12 @@ workoutRouter.get("/", async (_req, res) => {
 workoutRouter.post("/", async (req, res) => {
     try {
         const workout = req.body;
+
+        //TODO: filter out existing exercises
+        workout.exercises.map(async (exercise: Exercise) => {
+            const result = await collections.exercises.insertOne({name: exercise.name});
+        });
+
         const result = await collections.workouts.insertOne(workout);
 
         if (result.acknowledged) {
