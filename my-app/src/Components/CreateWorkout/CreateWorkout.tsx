@@ -14,13 +14,19 @@ type Exercise = {
     type?: string
 }
 
+type ExerciseName = {
+    _id?: number,
+    name: string,
+    category?: string
+}
+
 const CreateWorkout: React.FC = () => {
     const [values, setValues] = React.useState<any>([]);
-    const [exercises, setExercises] = React.useState<Exercise[]>([]);
+    const [exercises, setExercises] = React.useState<ExerciseName[]>([]);
 
     React.useEffect(() => {
-        async function getExercises() {
-            const response = await fetch(`http://localhost:5200/exercises/`);
+        async function getExerciseNames() {
+            const response = await fetch(`http://localhost:5200/exercises/names/`);
 
             if (!response.ok) {
                 //TODO error response
@@ -32,7 +38,7 @@ const CreateWorkout: React.FC = () => {
             setExercises(exercises);
         }
 
-        getExercises();
+        getExerciseNames();
 
         return;
     }, [exercises.length])
@@ -117,8 +123,8 @@ const CreateWorkout: React.FC = () => {
                                 // Regular option
                                 return option.name;
                               }}
-                            renderTags={(values: Exercise[], getTagProps) =>
-                                values.map((option: Exercise, index: number) => (
+                            renderTags={(values: ExerciseName[], getTagProps) =>
+                                values.map((option: ExerciseName, index: number) => (
                                   <Chip variant="outlined" label={option.name} {...getTagProps({ index })} 
                                     onDelete={() => {
                                         setValues(values.filter(entry => entry.name !== option.name));

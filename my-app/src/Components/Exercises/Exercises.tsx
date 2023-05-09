@@ -12,12 +12,20 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ExerciseTable from "../ExerciseTable/ExerciseTable";
 import CardActionArea from '@mui/material/CardActionArea';
+import { NumericLiteral } from "@babel/types";
+
+//TODO refactor
+type ExerciseName = {
+    _id?: NumericLiteral,
+    name: string,
+    category: string
+}
 
 type Workout = {
-    id: number,
+    _id: number,
     name: string,
     date: string,
-    exercises: string[]
+    exercises: ExerciseName[]
 }
 
 const bull = (
@@ -28,28 +36,6 @@ const bull = (
         •
     </Box>
 );
-
-const getWorkouts = async () => {
-    await fetch(`http://localhost:5200/workouts/`)
-}
-
-const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    
-    //TODO: refactor to a module
-    await fetch(`http://localhost:5200/workouts/`, {
-        method: "POST",
-        body: JSON.stringify({
-            name: data.get('workoutName'),
-            date: new Date(),
-            exercises: [data.get('exercises')]
-        }),
-        headers: {
-            "Content-Type": 'application/json'
-        },
-    })
-}
 
 
 const Exercise: React.FC = () => {
@@ -123,10 +109,10 @@ const Exercise: React.FC = () => {
                                     {workout.name}
                                     </Typography>
                                     <Typography variant="body2">
-                                        {workout.exercises.map((name: string) => (
+                                        {workout.exercises.map((exerciseName: ExerciseName) => (
                                         <Typography variant="body1">
                                             {bull}
-                                            {name}
+                                            {exerciseName.name}
                                         </Typography>
                                         ))}
                                     </Typography>

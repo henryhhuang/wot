@@ -1,10 +1,12 @@
 import * as mongodb from "mongodb";
 import { Workout } from "../models/workout";
 import { Exercise } from "../models/exercise";
+import { ExerciseNames } from "../models/exerciseEnum";
 
 export const collections: {
     workouts?: mongodb.Collection<Workout>;
     exercises?: mongodb.Collection<Exercise>;
+    exerciseNames?: mongodb.Collection<ExerciseNames>;
 } = {};
 
 // https://www.mongodb.com/blog/post/json-schema-validation--locking-down-your-model-the-smart-way
@@ -18,8 +20,10 @@ export async function connectToDatabase(uri: string) {
   
     const workoutCollections = db.collection<Workout>("workouts");
     const exerciseCollections = db.collection<Exercise>("exercises");
+    const exerciseNameCollections = db.collection<ExerciseNames>("exerciseNames");
     collections.workouts = workoutCollections;
     collections.exercises = exerciseCollections;
+    collections.exerciseNames = exerciseNameCollections;
  }
 
 

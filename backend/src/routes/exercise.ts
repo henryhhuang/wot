@@ -13,3 +13,12 @@ exerciseRouter.get("/", async (_req, res) => {
        res.status(500).send(error.message);
    }
 });
+
+exerciseRouter.get("/names", async (_req, res) => {
+    try {
+        const exercisesNames = await collections.exerciseNames.find({}).toArray();
+        res.status(200).send(exercisesNames);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+})
