@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import React, { useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import ExerciseTable from "../ExerciseTable/ExerciseTable";
+import WorkoutTable from "../WorkoutTable/WorkoutTable";
 import CardActionArea from '@mui/material/CardActionArea';
 import { NumericLiteral } from "@babel/types";
 
@@ -42,7 +42,7 @@ const Exercise: React.FC = () => {
     const [state, setState] = React.useState({
         drawer: false
     });
-
+    const [drawerWorkout, setdrawerWorkout] = React.useState(0);
     const [workouts, setWorkouts] = React.useState([]);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const Exercise: React.FC = () => {
 
 
     const toggleDrawer =
-        (open: boolean) =>
+        (open: boolean, id:number) =>
         (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
             event.type === 'keydown' &&
@@ -77,6 +77,9 @@ const Exercise: React.FC = () => {
         }
 
         setState({ ...state, ['drawer']: open });
+        if (id != 0) {
+            setdrawerWorkout(id);
+        }
     };
 
     return (
@@ -99,7 +102,7 @@ const Exercise: React.FC = () => {
             <Grid container spacing={2}>
                 {workouts.map((workout: Workout) => (
                     <Grid item xs={12}>
-                        <CardActionArea component="a" href="#" onClick={toggleDrawer(true)}>
+                        <CardActionArea component="a" href="#" onClick={toggleDrawer(true, workout._id)}>
                             <Card sx={{ minWidth: 275, boxShadow: 1, border: 1, borderRadius: '10px', borderColor: 'secondary.main' }}>
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} gutterBottom>
@@ -125,11 +128,11 @@ const Exercise: React.FC = () => {
                 <Drawer
                     anchor="bottom"
                     open={state['drawer']}
-                    onClose={toggleDrawer(false)}
+                    onClose={toggleDrawer(false, 0)}
                     PaperProps={{
                     sx: { height: "80%" },
                 }}>
-                <ExerciseTable name="placeholder" sets={[{"weight" : 1, "reps": 1}]}/>
+                <WorkoutTable workoutId={drawerWorkout} />
             </Drawer>
         </Box>
         </Container>

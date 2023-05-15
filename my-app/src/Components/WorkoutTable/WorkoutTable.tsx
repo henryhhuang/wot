@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -23,14 +23,44 @@ type Exercise = {
 }
 
 interface Props {
-    name: string,
-    sets: Set[]
+    workoutId: number
 }
 
-const ExerciseTable: React.FC<Props> = ( {name, sets} ) => {
+const WorkoutTable: React.FC<Props> = ( { workoutId } ) => {
+    const [exercises, setExercises] = React.useState([]);
+
+    console.log(exercises)
+
+    useEffect(() => {
+        console.log(workoutId)
+        if (!workoutId) {
+            return
+        }
+
+        async function getExercises() {
+            const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId);
+
+            if (!response.ok) {
+                //TODO error response
+                console.log(`error: ${response.statusText}`);
+                return;
+            }
+            
+            const workouts = await response.json();
+            setExercises(workouts);
+        }
+
+        getExercises();
+
+        return;
+    }, [exercises.length])
+
     return (
         <Paper className="root">
-            {data.map((exercise: Exercise) => (
+            <div>
+                Create
+            </div>
+            {exercises.map((exercise: Exercise) => (
                 <TableContainer component={Paper}>
                     <Table className="table" size="small">
                         <TableHead>
@@ -41,6 +71,13 @@ const ExerciseTable: React.FC<Props> = ( {name, sets} ) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            <TableRow>
+                                <TableCell />
+                                <TableCell className="tableCell" >10</TableCell>
+                                <TableCell className="tableCell" >10</TableCell>
+                            </TableRow>
+                        </TableBody>
+                        {/* <TableBody>
                             {exercise.sets.map((set: Set, index: number) => (
                                 <TableRow
                                 key={'table-' + index}
@@ -53,7 +90,7 @@ const ExerciseTable: React.FC<Props> = ( {name, sets} ) => {
                                 <TableCell className="tableCell">{set.reps}</TableCell>
                                 </TableRow>
                             ))}
-                        </TableBody>
+                        </TableBody> */}
                     </Table>
                 </TableContainer>
             ))}
@@ -62,4 +99,4 @@ const ExerciseTable: React.FC<Props> = ( {name, sets} ) => {
 }
 
 
-export default ExerciseTable;
+export default WorkoutTable;

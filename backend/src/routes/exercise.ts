@@ -14,6 +14,20 @@ exerciseRouter.get("/", async (_req, res) => {
    }
 });
 
+//find all exercises associated with workoutId
+exerciseRouter.get("/workout/:workoutId", async (req, res) => {
+    try {
+        const id = req?.params?.workoutId;
+        const query = {
+            workoutId: new mongodb.ObjectId(id)
+        };
+        const exercises = await collections.exercises.find(query).toArray();
+        res.status(200).send(exercises);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+ });
+
 exerciseRouter.get("/names", async (_req, res) => {
     try {
         const exercisesNames = await collections.exerciseNames.find({}).toArray();
