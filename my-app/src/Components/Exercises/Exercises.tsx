@@ -66,7 +66,7 @@ const Exercise: React.FC = () => {
 
 
     const toggleDrawer =
-        (open: boolean, id:number) =>
+        (open: boolean, id: number) =>
         (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
             event.type === 'keydown' &&

@@ -7,8 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import data from "../../mock/exercises.json";
-
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 type Set = { 
     weight: number,
@@ -24,6 +28,59 @@ type Exercise = {
 
 interface Props {
     workoutId: number
+}
+
+interface RowProps {
+    exercise: any
+}
+
+const Row: React.FC<RowProps> = ( { exercise } ) => {
+    const [open, setOpen] = React.useState(false);
+
+    return (
+        <React.Fragment>
+          <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableCell>
+              <IconButton
+                aria-label="expand row"
+                size="small"
+                onClick={() => setOpen(!open)}
+              >
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </TableCell>
+            <TableCell component="th" scope="row">
+              {exercise.name}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <Box sx={{ margin: 1 }}>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Weight</TableCell>
+                        <TableCell>Reps</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {exercise.sets.map((set: any) => (
+                        <TableRow key="placeholder">
+                          <TableCell component="th" scope="row" sx={{borderBottom: "none"}}>
+                            100
+                          </TableCell>
+                          <TableCell sx={{borderBottom: "none"}}>10</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Box>
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        </React.Fragment>
+      );
 }
 
 const WorkoutTable: React.FC<Props> = ( { workoutId } ) => {
@@ -56,45 +113,18 @@ const WorkoutTable: React.FC<Props> = ( { workoutId } ) => {
     }, [exercises.length])
 
     return (
-        <Paper className="root">
-            <div>
-                Create
-            </div>
+        <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow />
+          </TableHead>
+          <TableBody>
             {exercises.map((exercise: Exercise) => (
-                <TableContainer component={Paper}>
-                    <Table className="table" size="small">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell className="tableCell">{exercise.name}</TableCell>
-                                <TableCell className="tableCell" >Weight</TableCell>
-                                <TableCell className="tableCell" >Reps</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell />
-                                <TableCell className="tableCell" >10</TableCell>
-                                <TableCell className="tableCell" >10</TableCell>
-                            </TableRow>
-                        </TableBody>
-                        {/* <TableBody>
-                            {exercise.sets.map((set: Set, index: number) => (
-                                <TableRow
-                                key={'table-' + index}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                <TableCell className="tableCell" component="th" scope="row">
-                                    Set {index + 1}
-                                </TableCell>
-                                <TableCell className="tableCell">{set.weight}</TableCell>
-                                <TableCell className="tableCell">{set.reps}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody> */}
-                    </Table>
-                </TableContainer>
+              <Row key="placeholder" exercise={exercise} />
             ))}
-        </Paper>
+          </TableBody>
+        </Table>
+      </TableContainer>
     )
 }
 
