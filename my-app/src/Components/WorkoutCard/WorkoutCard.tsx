@@ -12,14 +12,7 @@ import Collapse from '@mui/material/Collapse';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import AddIcon from "@mui/icons-material/Add";
-import { TextField } from "@mui/material";
+import WotTable from "../WotTable/WotTable";
 
 const bull = (
     <Box
@@ -102,6 +95,19 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
         return;
     }, [exercises.length])
 
+    const addExercise = async ( values: any ) => {
+        console.log(values)
+        // await fetch(`http://localhost:5200/workouts/`, {
+        //     method: "PUT",
+        //     body: JSON.stringify({
+        //         _id: id,
+        //     }),
+        //     headers: {
+        //         "Content-Type": 'application/json'
+        //     },
+        // })
+    }
+
     return (
             <Card sx={{ minWidth: 275, border: 1 }}>
                 <CardContent>
@@ -133,66 +139,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                     {exercises.map((exercise: Exercise) => (
-                        <TableContainer component={Paper}>
-                        {exercise.name}
-                        <Table size="small" aria-label="simple table">
-                            <TableHead>
-                            <TableRow>
-                                <TableCell align="right">Weight</TableCell>
-                                <TableCell align="right">Reps</TableCell>
-                            </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    exercise.sets.map((set: Set) => (
-                                        <TableRow
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell align="right">{set.weight}</TableCell>
-                                            <TableCell align="right">{set.reps}</TableCell>
-                                        </TableRow>
-                                    ))
-                                }
-                                 <TableRow
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="right">
-                                        <TextField 
-                                            variant="standard" 
-                                            size="small" 
-                                            InputProps={{ disableUnderline: true }} 
-                                            inputProps={{
-                                                sx: {
-                                                    textAlign: "right",
-                                                    "&::placeholder": {
-                                                    textAlign: "right",
-                                                    },
-                                            },}} 
-                                        />    
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <TextField 
-                                            variant="standard" 
-                                            size="small" 
-                                            InputProps={{ disableUnderline: true }} 
-                                            inputProps={{
-                                                sx: {
-                                                    textAlign: "right",
-                                                    "&::placeholder": {
-                                                    textAlign: "right",
-                                                    },
-                                            },}} 
-                                        />                                       
-                                    </TableCell>
-                                    <TableCell sx={{padding: "0px 10px 0px 0px"}} align="left">
-                                        <IconButton sx={{padding: "0px"}}>
-                                            <AddIcon></AddIcon>
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                        </TableContainer>
+                        <WotTable _id={exercise._id} name={exercise.name} sets={exercise.sets} addExercise={addExercise} />
                     ))}
                     </CardContent>
                 </Collapse>

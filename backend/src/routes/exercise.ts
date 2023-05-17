@@ -36,3 +36,23 @@ exerciseRouter.get("/names", async (_req, res) => {
         res.status(500).send(error.message);
     }
 })
+
+exerciseRouter.put("/", async (req, res) => {
+    try {
+        const exercise = req.body
+        if (!exercise.workoutId) {
+            res.status(500).send("Failed to create new workout, missing workout ID");
+            return;
+        }
+
+        const result = await collections.exercises.insertOne(exercise);
+
+        if (result.acknowledged) {
+            res.status(201).send(`Created new exercise: ID ${result.insertedId}.`);
+        } else {
+            res.status(500).send("Failed to create new exercise");
+        }
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+});
