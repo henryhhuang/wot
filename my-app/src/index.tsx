@@ -7,10 +7,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Exercise from './Components/Exercises/Exercises';
-import WOTDrawer from './Components/Drawer/WOTDrawer';
 import CreateWorkout from './Components/CreateWorkout/CreateWorkout';
-import WorkoutAccordion from './Components/WorkoutCard/WorkoutCard';
 import WorkoutCards from './Components/WorkoutCard/WorkoutCards';
 
 const root = ReactDOM.createRoot(

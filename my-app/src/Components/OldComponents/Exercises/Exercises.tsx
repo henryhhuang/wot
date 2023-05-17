@@ -1,4 +1,4 @@
-import data from "../../mock/workouts.json";
+import data from "../../../mock/workouts.json";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from '@mui/material/Paper';
@@ -10,13 +10,12 @@ import Container from "@mui/material/Container";
 import React, { useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import WorkoutTable from "../WorkoutTable/WorkoutTable";
+import WorkoutTable from "../../WorkoutTable/WorkoutTable";
 import CardActionArea from '@mui/material/CardActionArea';
-import { NumericLiteral } from "@babel/types";
 
 //TODO refactor
 type ExerciseName = {
-    _id?: NumericLiteral,
+    _id?: number,
     name: string,
     category: string
 }

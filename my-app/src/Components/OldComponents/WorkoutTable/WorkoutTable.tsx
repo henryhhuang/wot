@@ -8,11 +8,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from "@mui/material/Grid";
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
 
 type Set = { 
     weight: number,
@@ -50,13 +54,30 @@ const Row: React.FC<RowProps> = ( { exercise } ) => {
               </IconButton>
             </TableCell>
             <TableCell component="th" scope="row">
-              {exercise.name}
+                <Typography variant='body1'>
+                    {exercise.name}
+                </Typography>
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 1 }}>
+                    {/* <Box>
+                        <Grid container spacing={2} alignItems="center">
+                            <Grid item xs={4}>
+                                <TextField size='small' />
+                            </Grid>
+                            <Grid item xs={4}>
+                                <TextField size='small' />
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Button>
+                                    Add
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box> */}
                   <Table size="small">
                     <TableHead>
                       <TableRow>
@@ -65,14 +86,52 @@ const Row: React.FC<RowProps> = ( { exercise } ) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {exercise.sets.map((set: any) => (
-                        <TableRow key="placeholder">
+                      {/* {exercise.sets.map((set: any, index: number) => {
+                        {
+                            index == exercise.sets.length ?
+=                            <TableRow key="placeholder">
+                                <TableCell component="th" scope="row" sx={{borderBottom: "none"}}>
+                                    <TextField />
+                                </TableCell>
+                                <TableCell sx={{borderBottom: "none"}}>
+                                    <TextField />
+                                </TableCell>
+                            </TableRow>
+                            :
+                            <TableRow key="placeholder">
+                                <TableCell component="th" scope="row" sx={{borderBottom: "none"}}>
+                                    100
+                                </TableCell>
+                                <TableCell sx={{borderBottom: "none"}}>10</TableCell>
+                            </TableRow>
+                        }
+                      }
+                      )} */}
+                            <TableRow key="placeholder">
+                                <TableCell component="th" scope="row" sx={{borderBottom: "none"}}>
+                                    100
+                                </TableCell>
+                                <TableCell sx={{borderBottom: "none"}}>10</TableCell>
+                                </TableRow>
+                            <TableRow key="placeholder">
+                                <TableCell component="th" scope="row" sx={{borderBottom: "none", margin: "0px", padding: "0px"}}>
+                                    <TextField size='small' variant="standard" />
+                                </TableCell>
+                                <TableCell sx={{borderBottom: "none"}}>
+                                    <TextField size='small' variant="standard" />
+                                </TableCell>
+                                <TableCell sx={{borderBottom: "none"}}>
+                                    <IconButton size="small">
+                                        <AddIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        {/* <TableRow key="placeholder">
                           <TableCell component="th" scope="row" sx={{borderBottom: "none"}}>
                             100
                           </TableCell>
                           <TableCell sx={{borderBottom: "none"}}>10</TableCell>
-                        </TableRow>
-                      ))}
+                        </TableRow> */}
                     </TableBody>
                   </Table>
                 </Box>
