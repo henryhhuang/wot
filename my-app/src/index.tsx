@@ -10,6 +10,8 @@ import {
 import Exercise from './Components/Exercises/Exercises';
 import WOTDrawer from './Components/Drawer/WOTDrawer';
 import CreateWorkout from './Components/CreateWorkout/CreateWorkout';
+import WorkoutAccordion from './Components/WorkoutCard/WorkoutCard';
+import WorkoutCards from './Components/WorkoutCard/WorkoutCards';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,7 +20,7 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Exercise />,
+    element: <WorkoutCards />,
   },
   {
     path: "/create",
