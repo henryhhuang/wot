@@ -30,36 +30,18 @@ const bull = (
     </Box>
 );
 
-let workout = {
-    "name" : "Chest",
-    "date" : "2023-05-16",
-    "exercises": [ 
-        {
-            name: "Bench press",
-        },
-        {
-            name: "Chest fly"
-        }
-    ]
+type Set = {
+    weight: number,
+    reps: number
 }
 
-let exercises = {
-    "name" : "bench press",
-    "sets" : [
-        {
-            weight: 100,
-            reps: 10
-        },
-        {
-            weight: 100,
-            reps: 10
-        },
-        {
-            weight: 100,
-            reps: 10
-        }
-    ]
+type Exercise = {
+    _id: number,
+    name: string,
+    workoutId: number,
+    sets: Set[]
 }
+
 type ExerciseName = {
     _id?: number,
     name: string,
@@ -69,7 +51,8 @@ type ExerciseName = {
 interface Props {
     name: string,
     date: string,
-    exercises: ExerciseName[]
+    exerciseNames: ExerciseName[],
+    workoutId: number
 }
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -87,24 +70,49 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     }),
 }));
 
-const WorkoutCard: React.FC<Props> = () => {
+const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) => {
     const [expanded, setExpanded] = React.useState(false);
+    const [exercises, setExercises] = React.useState<Exercise[]>([]);
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
+    useEffect(() => {
+        if (!workoutId) {
+            return
+        }
+
+        async function getExercises() {
+            const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId);
+
+            if (!response.ok) {
+                //TODO error response
+                console.log(`error: ${response.statusText}`);
+                return;
+            }
+            
+            const exercises = await response.json();
+            setExercises(exercises);
+        }
+
+        getExercises();
+
+        return;
+    }, [exercises.length])
+
     return (
             <Card sx={{ minWidth: 275, border: 1 }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                    {workout.date}
+                    {date}
                     </Typography>
                     <Typography component="h1" variant="h6" sx={{ mb: 1.5 }}>
-                    {workout.name}
+                    {name}
                     </Typography>
                     <Typography variant="body2">
-                        {workout.exercises.map((exerciseName: ExerciseName) => (
+                        {exerciseNames.map((exerciseName: ExerciseName) => (
                         <Typography variant="body1">
                             {bull}
                             {exerciseName.name}
@@ -124,8 +132,9 @@ const WorkoutCard: React.FC<Props> = () => {
                 </CardContent>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        {exercises.name}
+                    {exercises.map((exercise: Exercise) => (
                         <TableContainer component={Paper}>
+                        {exercise.name}
                         <Table size="small" aria-label="simple table">
                             <TableHead>
                             <TableRow>
@@ -135,7 +144,7 @@ const WorkoutCard: React.FC<Props> = () => {
                             </TableHead>
                             <TableBody>
                                 {
-                                    exercises.sets.map((set: any) => (
+                                    exercise.sets.map((set: Set) => (
                                         <TableRow
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
@@ -184,7 +193,7 @@ const WorkoutCard: React.FC<Props> = () => {
                             </TableBody>
                         </Table>
                         </TableContainer>
-                        
+                    ))}
                     </CardContent>
                 </Collapse>
             </Card>

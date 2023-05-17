@@ -19,7 +19,7 @@ type Workout = {
 }
 
 const WorkoutCards: React.FC = () => {
-    const [workouts, setWorkouts] = React.useState([]);
+    const [workouts, setWorkouts] = React.useState<Workout[]>([]);
 
     useEffect(() => {
         async function getWorkouts() {
@@ -58,7 +58,7 @@ const WorkoutCards: React.FC = () => {
                 <Grid container spacing={2}>
                     {workouts.map((workout: Workout) => (
                         <Grid item xs={12}>
-                            <WorkoutCard name={workout.name} date={workout.date} exercises={workout.exercises} />
+                            <WorkoutCard workoutId={workout._id} name={workout.name} date={workout.date} exerciseNames={workout.exercises} />
                         </Grid>
                     ))}
                 </Grid>
