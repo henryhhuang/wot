@@ -19,13 +19,13 @@ interface Props {
     _id: number
     name: string,
     sets: Set[],
-    addExercise?: (values: {
+    addSet?: (values: {
         _id: number,
         set: Set
     }) => void;
 }
 
-const WotTable: React.FC<Props> = ( { _id, name, sets, addExercise} ) => {
+const WotTable: React.FC<Props> = ( { _id, name, sets, addSet} ) => {
     const weightRef = useRef<HTMLInputElement>(null);
     const repsRef = useRef<HTMLInputElement>(null);
 
@@ -33,7 +33,7 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addExercise} ) => {
 
         if (weightRef.current && repsRef.current && weightRef.current.value && repsRef.current.value) {
             //todo error check
-            addExercise?.({
+            addSet?.({
                 _id: _id,
                 set: {
                     weight: Number(weightRef.current.value),

@@ -8,7 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import CreateWorkout from './Components/CreateWorkout/CreateWorkout';
-import WorkoutCards from './Components/WorkoutCard/WorkoutCards';
+import Home from './Components/Home/Home';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <WorkoutCards />,
+    element: <Home />,
   },
   {
     path: "/create",

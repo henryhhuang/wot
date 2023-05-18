@@ -41,12 +41,6 @@ const WorkoutCards: React.FC = () => {
     }, [workouts.length])
 
     return (
-        <Container 
-            component="main" 
-            maxWidth="xs"
-            sx = {{
-                backgroundColor: '#fff'
-         }}>
             <Box
                 sx={{
                     marginTop: 4,
@@ -63,7 +57,6 @@ const WorkoutCards: React.FC = () => {
                     ))}
                 </Grid>
             </Box>
-        </Container>
     )
 }
 

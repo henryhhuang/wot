@@ -1,8 +1,5 @@
 
-// import data from "../../mock/workouts.json";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,6 +10,9 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import WotTable from "../WotTable/WotTable";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
 
 const bull = (
     <Box
@@ -79,7 +79,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
         const exercises = await response.json();
         setExercises(exercises);
     }
-    
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -94,10 +94,29 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
         return;
     }, [exercises.length])
 
-    const addExercise = async ( values: any ) => {
+    const addSet = async ( values: any ) => {
         await fetch(`http://localhost:5200/exercises/set/` + values._id, {
             method: "PUT",
             body: JSON.stringify(values),
+            headers: {
+                "Content-Type": 'application/json'
+            },
+        })
+
+        getExercises();
+    }
+
+    const addExercise = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        await fetch(`http://localhost:5200/exercises/`, {
+            method: "POST",
+            body: JSON.stringify({
+                name: data.get('exerciseName'),
+                workoutId: workoutId,
+                sets: []
+            }),
             headers: {
                 "Content-Type": 'application/json'
             },
@@ -137,8 +156,19 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                     {exercises.map((exercise: Exercise) => (
-                        <WotTable _id={exercise._id} name={exercise.name} sets={exercise.sets} addExercise={addExercise} />
+                        <WotTable _id={exercise._id} name={exercise.name} sets={exercise.sets} addSet={addSet} />
                     ))}
+                    <Box component="form" onSubmit={addExercise}>
+                        <TextField 
+                                size="small"
+                                name="exerciseName"
+                                id="exerciseName"
+                            />
+                        <Button type="submit">
+                            <AddIcon />
+                            Add an exercise
+                        </Button>
+                    </Box>
                     </CardContent>
                 </Collapse>
             </Card>

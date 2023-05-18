@@ -37,6 +37,28 @@ exerciseRouter.get("/names", async (_req, res) => {
     }
 })
 
+exerciseRouter.post("/", async (req, res) => {
+    try {
+        const exercise = req.body;
+
+        const query = {
+            name: exercise.name,
+            workoutId: new mongodb.ObjectId(exercise.workoutId),
+            sets: exercise.sets
+        }
+
+        const result = await collections.exercises.insertOne( query );
+
+        if (result.acknowledged) {
+            res.status(201).send(`Created exercise: ID ${result.insertedId}.`);
+        } else {
+            res.status(500).send("Failed to create new exercise");
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+})
+
 //Add a set to the exercise with exerciseId
 exerciseRouter.put("/set/:exerciseId", async (req, res) => {
     try {
