@@ -37,20 +37,18 @@ exerciseRouter.get("/names", async (_req, res) => {
     }
 })
 
-exerciseRouter.put("/", async (req, res) => {
+//Add a set to the exercise with exerciseId
+exerciseRouter.put("/set/:exerciseId", async (req, res) => {
     try {
+        const id = req?.params?.exerciseId;
         const exercise = req.body
-        if (!exercise.workoutId) {
-            res.status(500).send("Failed to create new workout, missing workout ID");
-            return;
-        }
 
-        const result = await collections.exercises.insertOne(exercise);
+        const result = await collections.exercises.updateOne( { _id: new mongodb.ObjectId(id) }, { $push: { sets: exercise.set } } );
 
         if (result.acknowledged) {
-            res.status(201).send(`Created new exercise: ID ${result.insertedId}.`);
+            res.status(201).send(`Updated exercise: ID ${result.upsertedId}.`);
         } else {
-            res.status(500).send("Failed to create new exercise");
+            res.status(500).send("Failed to add new set to exercise");
         }
     } catch (error) {
         res.status(500).send(error.message)

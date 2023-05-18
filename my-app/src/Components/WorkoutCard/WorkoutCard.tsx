@@ -67,7 +67,19 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
     const [expanded, setExpanded] = React.useState(false);
     const [exercises, setExercises] = React.useState<Exercise[]>([]);
 
+    async function getExercises() {
+        const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId);
 
+        if (!response.ok) {
+            //TODO error response
+            console.log(`error: ${response.statusText}`);
+            return;
+        }
+        
+        const exercises = await response.json();
+        setExercises(exercises);
+    }
+    
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -77,35 +89,21 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
             return
         }
 
-        async function getExercises() {
-            const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId);
-
-            if (!response.ok) {
-                //TODO error response
-                console.log(`error: ${response.statusText}`);
-                return;
-            }
-            
-            const exercises = await response.json();
-            setExercises(exercises);
-        }
-
         getExercises();
 
         return;
     }, [exercises.length])
 
     const addExercise = async ( values: any ) => {
-        console.log(values)
-        // await fetch(`http://localhost:5200/workouts/`, {
-        //     method: "PUT",
-        //     body: JSON.stringify({
-        //         _id: id,
-        //     }),
-        //     headers: {
-        //         "Content-Type": 'application/json'
-        //     },
-        // })
+        await fetch(`http://localhost:5200/exercises/set/` + values._id, {
+            method: "PUT",
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": 'application/json'
+            },
+        })
+
+        getExercises();
     }
 
     return (
