@@ -60,17 +60,42 @@ exerciseRouter.post("/", async (req, res) => {
 })
 
 //Add a set to the exercise with exerciseId
-exerciseRouter.put("/set/:exerciseId", async (req, res) => {
+exerciseRouter.put("/set/", async (req, res) => {
     try {
-        const id = req?.params?.exerciseId;
         const exercise = req.body
+        const id = exercise._id;
+        const set = {
+            _id: new mongodb.ObjectId(),
+            weight: exercise.set.weight,
+            reps: exercise.set.reps
+        }
 
-        const result = await collections.exercises.updateOne( { _id: new mongodb.ObjectId(id) }, { $push: { sets: exercise.set } } );
+        const result = await collections.exercises.updateOne( { _id: new mongodb.ObjectId(id) }, { $push: { sets: set } } );
 
         if (result.acknowledged) {
             res.status(201).send(`Updated exercise: ID ${result.upsertedId}.`);
         } else {
             res.status(500).send("Failed to add new set to exercise");
+        }
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+});
+
+exerciseRouter.delete("/set/", async (req, res) => {
+    try {
+        const body = req.body;
+        const id = body._id;
+        const query = {
+            _id: new mongodb.ObjectId(body.setId)
+        }
+    
+        const result = await collections.exercises.updateOne( { _id: new mongodb.ObjectId(id) }, { $pull: { sets: query } } );
+        
+        if (result.acknowledged) {
+            res.status(201).send(`Updated exercise: ID ${result.upsertedId}.`);
+        } else {
+            res.status(500).send("Failed to remove set from exercise");
         }
     } catch (error) {
         res.status(500).send(error.message)

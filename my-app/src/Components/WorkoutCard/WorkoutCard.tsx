@@ -24,6 +24,7 @@ const bull = (
 );
 
 type Set = {
+    _id?: number,
     weight: number,
     reps: number
 }
@@ -95,7 +96,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
     }, [exercises.length])
 
     const addSet = async ( values: any ) => {
-        await fetch(`http://localhost:5200/exercises/set/` + values._id, {
+        await fetch(`http://localhost:5200/exercises/set/`, {
             method: "PUT",
             body: JSON.stringify(values),
             headers: {
@@ -121,6 +122,18 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
                 "Content-Type": 'application/json'
             },
         })
+
+        getExercises();
+    }
+
+    const removeSet = async ( values: any ) => {
+        await fetch(`http://localhost:5200/exercises/set/`, {
+            method: "DELETE",
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": 'application/json'
+            },
+        });
 
         getExercises();
     }
@@ -156,7 +169,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                     {exercises.map((exercise: Exercise) => (
-                        <WotTable _id={exercise._id} name={exercise.name} sets={exercise.sets} addSet={addSet} />
+                        <WotTable _id={exercise._id} name={exercise.name} sets={exercise.sets} addSet={addSet} removeSet={removeSet} />
                     ))}
                     <Box component="form" onSubmit={addExercise}>
                         <TextField 

@@ -8,9 +8,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from '@mui/icons-material/Remove';
 import { setRef, TextField } from "@mui/material";
 
 type Set = {
+    _id?: number,
     weight: number,
     reps: number
 }
@@ -23,9 +25,13 @@ interface Props {
         _id: number,
         set: Set
     }) => void;
+    removeSet?: (values: {
+        _id: number,
+        setId: number
+    }) => void;
 }
 
-const WotTable: React.FC<Props> = ( { _id, name, sets, addSet} ) => {
+const WotTable: React.FC<Props> = ( { _id, name, sets, addSet, removeSet} ) => {
     const weightRef = useRef<HTMLInputElement>(null);
     const repsRef = useRef<HTMLInputElement>(null);
 
@@ -46,6 +52,18 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet} ) => {
         console.log("Weight and reps are required");
     }
 
+    const handleRemove = (id: number) => {
+        if (id != 0) {
+            removeSet?.({
+                _id: _id,
+                setId: id
+            })
+            return;
+        }
+
+        console.log("Failed to remove set")
+    }
+
     return (
         <TableContainer>
             {name}
@@ -64,6 +82,13 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet} ) => {
                             >
                                 <TableCell align="right">{set.weight}</TableCell>
                                 <TableCell align="right">{set.reps}</TableCell>
+                                <TableCell sx={{padding: "0px 10px 0px 0px"}} align="left">
+                                    <IconButton sx={{padding: "0px"}} onClick={() => {
+                                        handleRemove(set._id || 0);
+                                    }}>
+                                        <RemoveIcon />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))
                     }
@@ -104,7 +129,7 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet} ) => {
                             <IconButton sx={{padding: "0px"}} onClick={() => {
                                 handleAdd();
                             }}>
-                                <AddIcon></AddIcon>
+                                <AddIcon />
                             </IconButton>
                         </TableCell>
                     </TableRow>
