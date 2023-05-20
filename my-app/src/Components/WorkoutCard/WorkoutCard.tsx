@@ -13,6 +13,7 @@ import WotTable from "../WotTable/WotTable";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const bull = (
     <Box
@@ -46,8 +47,10 @@ interface Props {
     name: string,
     date: string,
     exerciseNames: ExerciseName[],
-    workoutId: number
+    workoutId: number,
+    deleteWorkout?: (_id: number) => void;
 }
+
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -64,7 +67,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     }),
 }));
 
-const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) => {
+const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, deleteWorkout} ) => {
     const [expanded, setExpanded] = React.useState(false);
     const [exercises, setExercises] = React.useState<Exercise[]>([]);
 
@@ -141,9 +144,16 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
     return (
             <Card sx={{ minWidth: 275, border: 1 }}>
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} gutterBottom>
-                    {date}
-                    </Typography>
+                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <Typography sx={{ fontSize: 14 }} gutterBottom>
+                            {date}
+                        </Typography>
+                        <IconButton onClick={() => {
+                            deleteWorkout?.(workoutId);
+                        }}>
+                                <DeleteIcon />
+                        </IconButton>
+                    </Box>
                     <Typography component="h1" variant="h6" sx={{ mb: 1.5 }}>
                     {name}
                     </Typography>
@@ -167,9 +177,14 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames} ) 
                     </CardActions>
                 </CardContent>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
+                    <CardContent sx={{ paddingTop: "0px" }}>
                     {exercises.map((exercise: Exercise) => (
-                        <WotTable _id={exercise._id} name={exercise.name} sets={exercise.sets} addSet={addSet} removeSet={removeSet} />
+                        <WotTable 
+                            _id={exercise._id} 
+                            name={exercise.name} 
+                            sets={exercise.sets} 
+                            addSet={addSet} 
+                            removeSet={removeSet} />
                     ))}
                     <Box component="form" onSubmit={addExercise}>
                         <TextField 

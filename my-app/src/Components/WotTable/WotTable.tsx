@@ -65,7 +65,7 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet, removeSet} ) => {
     }
 
     return (
-        <TableContainer>
+        <TableContainer sx={{paddingBottom: "10px"}} >
             {name}
             <Table size="small" aria-label="simple table">
                 <TableHead>
@@ -105,7 +105,8 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet, removeSet} ) => {
                                         "&::placeholder": {
                                         textAlign: "right",
                                         },
-                                        disableUnderline: true
+                                        disableUnderline: true,
+                                        fontSize: 14
                                 },}}
                                 inputRef={weightRef}
                             />    
@@ -120,7 +121,8 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet, removeSet} ) => {
                                         "&::placeholder": {
                                         textAlign: "right",
                                         },
-                                        disableUnderline: true
+                                        disableUnderline: true,
+                                        fontSize: 14
                                 },}}
                                 inputRef={repsRef}
                             />                                       

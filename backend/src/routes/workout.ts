@@ -22,22 +22,23 @@ workoutRouter.post("/", async (req, res) => {
 
         console.log(workout);
 
-        //TODO newly added exercises dont't have id in workouts, need to insert exerciseName first, then attach the id before inserting workout
+        //newly added exercises dont't have id in workouts, need to insert exerciseName first, then attach the id before inserting workout
 
         const result = await collections.workouts.insertOne(workout);
 
         if (result.acknowledged) {
-                //   TODO: filter out existing exercises
+            //TODO: revamp this process since it will be hard avoid exerciseName stagnation
             workout.exercises.map(async (exercise: ExerciseNames) => {
                 
                 const exerciseObj:Exercise = {
                     name: exercise.name,
-                    workoutId: result.insertedId
+                    workoutId: result.insertedId,
+                    sets: []
                 }
 
                 await collections.exercises.insertOne(exerciseObj);
 
-                if (!exercise._id) {
+                if (exercise._id == null) {
                     await collections.exerciseNames.insertOne({ name: exercise.name });
                 }
 
@@ -54,10 +55,21 @@ workoutRouter.post("/", async (req, res) => {
 workoutRouter.delete("/:id", async (req, res) => {
     try {
         const id = req?.params?.id;
-        const query = {
+
+        //Delete any exercises associated with the workout
+        const exercises = await collections.exercises.find( { 
+            workoutId: new mongodb.ObjectId(id)
+        } ).toArray();
+
+        exercises.map(async (exercise: Exercise) => {
+            await collections.exercises.deleteOne( {
+                _id: new mongodb.ObjectId(exercise._id)
+            })
+        });
+
+        const result = await collections.workouts.deleteOne({
             _id: new mongodb.ObjectId(id)
-        };
-        const result = await collections.workouts.deleteOne(query);
+        });
 
         if (result && result.deletedCount) {
             res.status(202).send(`Removed workout: ID ${id}`);

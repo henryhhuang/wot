@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';
 import Chip from '@mui/material/Chip';
+import { useNavigate } from "react-router-dom";
 
 type Exercise = {
     id?: number,
@@ -23,6 +24,12 @@ type ExerciseName = {
 const CreateWorkout: React.FC = () => {
     const [values, setValues] = React.useState<any>([]);
     const [exercises, setExercises] = React.useState<ExerciseName[]>([]);
+
+    let navigate = useNavigate(); 
+
+    const routeBack = () =>{ 
+      navigate(-1);
+    }
 
     React.useEffect(() => {
         async function getExerciseNames() {
@@ -60,6 +67,8 @@ const CreateWorkout: React.FC = () => {
                 "Content-Type": 'application/json'
             },
         })
+        
+        routeBack();
     }
 
     return (

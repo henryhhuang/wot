@@ -21,20 +21,32 @@ type Workout = {
 const WorkoutCards: React.FC = () => {
     const [workouts, setWorkouts] = React.useState<Workout[]>([]);
 
-    useEffect(() => {
-        async function getWorkouts() {
-            const response = await fetch(`http://localhost:5200/workouts/`);
+    async function getWorkouts() {
+        const response = await fetch(`http://localhost:5200/workouts/`);
 
-            if (!response.ok) {
-                //TODO error response
-                console.log(`error: ${response.statusText}`);
-                return;
-            }
-            
-            const workouts = await response.json();
-            setWorkouts(workouts);
+        if (!response.ok) {
+            //TODO error response
+            console.log(`error: ${response.statusText}`);
+            return;
         }
+        
+        const workouts = await response.json();
+        setWorkouts(workouts);
+    }
 
+    const deleteWorkout = async ( id: number ) => {
+        await fetch(`http://localhost:5200/workouts/` + id , {
+            method: "DELETE",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+        });
+
+        getWorkouts();
+    }
+
+
+    useEffect(() => {
         getWorkouts();
 
         return;
@@ -52,7 +64,12 @@ const WorkoutCards: React.FC = () => {
                 <Grid container spacing={2}>
                     {workouts.map((workout: Workout) => (
                         <Grid item xs={12}>
-                            <WorkoutCard workoutId={workout._id} name={workout.name} date={workout.date} exerciseNames={workout.exercises} />
+                            <WorkoutCard 
+                                workoutId={workout._id} 
+                                name={workout.name} 
+                                date={workout.date} 
+                                exerciseNames={workout.exercises} 
+                                deleteWorkout={deleteWorkout}/>
                         </Grid>
                     ))}
                 </Grid>
