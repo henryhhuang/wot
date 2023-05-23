@@ -28,7 +28,7 @@ const SignIn: React.FC<Props> = ( { setUsername } ) => {
             method: "POST",
             body: JSON.stringify({
                 username: data.get('username'),
-                password: data.get('password'),
+                // password: data.get('password'),
             }),
             credentials: 'include',
             headers: {
@@ -65,7 +65,7 @@ const SignIn: React.FC<Props> = ( { setUsername } ) => {
                                 autoFocus
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <TextField 
                                     name="password"
                                     required
@@ -74,7 +74,7 @@ const SignIn: React.FC<Props> = ( { setUsername } ) => {
                                     label="password"
                                     autoFocus
                                 />         
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Button
                         type="submit"

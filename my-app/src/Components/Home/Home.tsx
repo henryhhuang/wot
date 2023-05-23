@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 import React from 'react';
+import { Typography } from '@mui/material';
 
 interface Props {
     username: string
@@ -26,17 +27,23 @@ const Home: React.FC<Props> = ( {username} ) => {
             sx = {{
                 backgroundColor: '#fff'
         }}>
-            <Box>
-                {username ?
+            {
+                username ?
+                
+                <Box>
                     <Button onClick={routeChange}>
                         <AddIcon />
                         Create
                     </Button>
-                    :
-                    <p></p>
-                }
-            </Box>
-            <WorkoutCards />
+                    <WorkoutCards />
+                </Box>
+                :
+                <Box>
+                    <Typography>
+                        Please sign in
+                    </Typography>
+                </Box>
+            }
         </Container>
     )
 }

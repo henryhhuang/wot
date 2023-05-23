@@ -157,9 +157,9 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, de
                     <Typography component="h1" variant="h6" sx={{ mb: 1.5 }}>
                     {name}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography component="div" variant="body2">
                         {exerciseNames.map((exerciseName: ExerciseName) => (
-                        <Typography variant="body1">
+                        <Typography key={"typography-" + exerciseName.name} variant="body1">
                             {bull}
                             {exerciseName.name}
                         </Typography>
@@ -178,14 +178,14 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, de
                 </CardContent>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent sx={{ paddingTop: "0px" }}>
-                    {exercises.map((exercise: Exercise) => (
-                        <WotTable 
-                            _id={exercise._id} 
-                            name={exercise.name} 
-                            sets={exercise.sets} 
-                            addSet={addSet} 
-                            removeSet={removeSet} />
-                    ))}
+                        {exercises.map((exercise: Exercise) => (
+                            <WotTable key={"wottable-" + exercise._id + "-" + exercise.name}
+                                _id={exercise._id} 
+                                name={exercise.name} 
+                                sets={exercise.sets} 
+                                addSet={addSet} 
+                                removeSet={removeSet} />
+                        ))}
                     <Box component="form" onSubmit={addExercise}>
                         <TextField 
                                 size="small"

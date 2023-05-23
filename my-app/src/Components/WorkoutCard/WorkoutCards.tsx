@@ -63,7 +63,7 @@ const WorkoutCards: React.FC = () => {
             >
                 <Grid container spacing={2}>
                     {workouts.map((workout: Workout) => (
-                        <Grid item xs={12}>
+                        <Grid key={"grid-" + workout._id} item xs={12}>
                             <WorkoutCard 
                                 workoutId={workout._id} 
                                 name={workout.name} 

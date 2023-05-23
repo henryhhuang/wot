@@ -76,8 +76,9 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet, removeSet} ) => {
                 </TableHead>
                 <TableBody>
                     {
-                        sets.map((set: Set) => (
+                        sets.map((set: Set, index: number) => (
                             <TableRow
+                            key={name + "-set-" + index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="right">{set.weight}</TableCell>

@@ -12,10 +12,6 @@ import Home from './Components/Home/Home';
 import WOTAppBar from './Components/AppBar/AppBar';
 import SignIn from './Components/SignIn/SignIn';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-
 function App() {
   const [username, setUsername] = React.useState("");
 
