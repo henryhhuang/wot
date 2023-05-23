@@ -1,6 +1,9 @@
 import * as express from "express";
 import passport from "passport";
 import * as mongodb from "mongodb";
+import { User } from "../models/user";
+import { collections } from "../db/database";
+import { userInfo } from "os";
 
 export const authRouter = express.Router();
 
@@ -16,14 +19,34 @@ authRouter.get("/google/redirect", passport.authenticate("google", { failureRedi
 });
 
 //TODO proper login
-authRouter.post("/signin", (req, res) => {
+authRouter.post("/signin", async (req, res) => {
     try {
         const user = req.body;
     
         if (user.username) {
-            req.session.username = user.username
-    
-            return res.json(req.session.username);
+            req.session.username = user.username;
+            let id: mongodb.ObjectId;
+
+            const userObj = await collections.users.findOne({ username: user.username });
+
+            if (!userObj) {
+                const result = await collections.users.insertOne( {
+                    username: user.username,
+                });
+
+                if (result.acknowledged) {
+                    id = result.insertedId;
+                }
+            } else {
+                id = userObj._id;
+            }
+
+            req.session.user = {
+                _id: id,
+                username: user.username
+            }
+
+            return res.json(req.session.user.username);
         } else {
             res.status(400).json({ error: "error" });
         }
@@ -34,9 +57,9 @@ authRouter.post("/signin", (req, res) => {
 
 
 authRouter.get("/user", (req, res) => {
-    if (req.session.username) {
-        res.send(req.session.username)
+    if (req.session.user) {
+        res.json(req.session.user.username)
     } else {
-        res.status(400).send( {message: "Not logged in" });
+        res.status(400).json( {message: "Not logged in" });
     }
 });

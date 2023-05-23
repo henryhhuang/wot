@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
@@ -25,11 +24,16 @@ function App() {
         method: "GET",
         headers: {
             "Content-Type": 'application/json'
-        }
+        },
+        credentials: 'include'
       });
-      const user = await response.json();
 
-      setUsername(user.username || "");
+      const username = await response.json();
+
+      if (!username.message) {
+        setUsername(username || "");
+      }
+
   }
 
   useEffect(() => {
@@ -38,7 +42,7 @@ function App() {
     }
 
     return;
-  }, [username])
+  });
 
   const router = createBrowserRouter([
     {
@@ -51,7 +55,7 @@ function App() {
       children: [
         {
         path: "/",
-        element: <Home />,
+        element: <Home username={username}/>,
         },
         {
           path: "/create",

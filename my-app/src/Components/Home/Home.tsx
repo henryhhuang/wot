@@ -7,8 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 import React from 'react';
 
+interface Props {
+    username: string
+}
 
-const Home: React.FC = () => {
+const Home: React.FC<Props> = ( {username} ) => {
     let navigate = useNavigate(); 
 
     const routeChange = () =>{ 
@@ -24,10 +27,14 @@ const Home: React.FC = () => {
                 backgroundColor: '#fff'
         }}>
             <Box>
-                <Button onClick={routeChange}>
-                    <AddIcon />
-                    Create
-                </Button>
+                {username ?
+                    <Button onClick={routeChange}>
+                        <AddIcon />
+                        Create
+                    </Button>
+                    :
+                    <p></p>
+                }
             </Box>
             <WorkoutCards />
         </Container>
