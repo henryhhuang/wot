@@ -105,6 +105,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, de
             headers: {
                 "Content-Type": 'application/json'
             },
+            credentials: 'include',
         })
 
         getExercises();
@@ -121,6 +122,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, de
                 workoutId: workoutId,
                 sets: []
             }),
+            credentials: 'include',
             headers: {
                 "Content-Type": 'application/json'
             },
@@ -136,6 +138,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, de
             headers: {
                 "Content-Type": 'application/json'
             },
+            credentials: 'include',
         });
 
         getExercises();

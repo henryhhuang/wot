@@ -55,6 +55,9 @@ async function applySchemaValidation(db: mongodb.Db) {
                     items: {
                         bsonType: ["string"]
                     }
+                },
+                userId: {
+                    bsonType: "objectId"
                 }
             }
         }

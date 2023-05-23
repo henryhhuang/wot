@@ -3,24 +3,28 @@ import * as mongodb from "mongodb";
 import { Exercise } from "../models/exercise";
 import { ExerciseNames } from "../models/exerciseEnum";
 import { collections } from "../db/database";
+import { isAuthenticated } from "../utils/authentication";
 
 export const workoutRouter = express.Router();
 workoutRouter.use(express.json());
- 
-workoutRouter.get("/", async (_req, res) => {
-   try {
-       const workouts = await collections.workouts.find({}).toArray();
-       res.status(200).send(workouts);
-   } catch (error) {
-       res.status(500).send(error.message);
-   }
-});
 
-workoutRouter.post("/", async (req, res) => {
+workoutRouter.get("/", isAuthenticated, async (req, res) => {
     try {
-        const workout = req.body;
+        const workouts = await collections.workouts.find({userId: new mongodb.ObjectId(req.session.user._id)}).toArray();
+        res.status(200).send(workouts);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+ });
 
-        console.log(workout);
+workoutRouter.post("/", isAuthenticated, async (req, res) => {
+    try {
+        const workout = {
+            name: req.body.name,
+            date: req.body.date,
+            exercises: req.body.exercises,
+            userId: new mongodb.ObjectId(req.session.user._id)
+        }
 
         //newly added exercises dont't have id in workouts, need to insert exerciseName first, then attach the id before inserting workout
 
@@ -33,7 +37,7 @@ workoutRouter.post("/", async (req, res) => {
                 const exerciseObj:Exercise = {
                     name: exercise.name,
                     workoutId: result.insertedId,
-                    sets: []
+                    sets: [],
                 }
 
                 await collections.exercises.insertOne(exerciseObj);
@@ -52,7 +56,7 @@ workoutRouter.post("/", async (req, res) => {
     }
 });
 
-workoutRouter.delete("/:id", async (req, res) => {
+workoutRouter.delete("/:id", isAuthenticated, async (req, res) => {
     try {
         const id = req?.params?.id;
 

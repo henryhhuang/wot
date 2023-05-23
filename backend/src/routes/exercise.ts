@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as mongodb from "mongodb";
 import { collections } from "../db/database";
+import { isAuthenticated } from "../utils/authentication";
 
 export const exerciseRouter = express.Router();
 exerciseRouter.use(express.json());
@@ -37,7 +38,7 @@ exerciseRouter.get("/names", async (_req, res) => {
     }
 })
 
-exerciseRouter.post("/", async (req, res) => {
+exerciseRouter.post("/", isAuthenticated, async (req, res) => {
     try {
         const exercise = req.body;
 
@@ -60,7 +61,7 @@ exerciseRouter.post("/", async (req, res) => {
 })
 
 //Add a set to the exercise with exerciseId
-exerciseRouter.put("/set/", async (req, res) => {
+exerciseRouter.put("/set/", isAuthenticated, async (req, res) => {
     try {
         const exercise = req.body
         const id = exercise._id;
@@ -82,7 +83,7 @@ exerciseRouter.put("/set/", async (req, res) => {
     }
 });
 
-exerciseRouter.delete("/set/", async (req, res) => {
+exerciseRouter.delete("/set/", isAuthenticated, async (req, res) => {
     try {
         const body = req.body;
         const id = body._id;

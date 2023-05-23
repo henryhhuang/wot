@@ -1,7 +1,5 @@
-// import data from "../../mock/workouts.json";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import React, { useEffect } from 'react';
 import WorkoutCard from "./WorkoutCard";
 
@@ -22,7 +20,9 @@ const WorkoutCards: React.FC = () => {
     const [workouts, setWorkouts] = React.useState<Workout[]>([]);
 
     async function getWorkouts() {
-        const response = await fetch(`http://localhost:5200/workouts/`);
+        const response = await fetch(`http://localhost:5200/workouts/`, {
+            credentials: 'include',
+        });
 
         if (!response.ok) {
             //TODO error response
@@ -37,6 +37,7 @@ const WorkoutCards: React.FC = () => {
     const deleteWorkout = async ( id: number ) => {
         await fetch(`http://localhost:5200/workouts/` + id , {
             method: "DELETE",
+            credentials: 'include',
             headers: {
                 "Content-Type": 'application/json'
             },

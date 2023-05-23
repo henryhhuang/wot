@@ -154,7 +154,9 @@ const WorkoutTable: React.FC<Props> = ( { workoutId } ) => {
         }
 
         async function getExercises() {
-            const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId);
+            const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId, {
+              credentials: 'include',
+            });
 
             if (!response.ok) {
                 //TODO error response

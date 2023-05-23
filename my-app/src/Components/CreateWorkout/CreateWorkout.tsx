@@ -63,6 +63,7 @@ const CreateWorkout: React.FC = () => {
                 date: new Date(),
                 exercises: values
             }),
+            credentials: 'include',
             headers: {
                 "Content-Type": 'application/json'
             },
