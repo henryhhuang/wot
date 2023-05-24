@@ -14,6 +14,8 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { format } from 'date-fns'
+
 
 const bull = (
     <Box
@@ -70,7 +72,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, deleteWorkout} ) => {
     const [expanded, setExpanded] = React.useState(false);
     const [exercises, setExercises] = React.useState<Exercise[]>([]);
-
+    
     async function getExercises() {
         const response = await fetch(`http://localhost:5200/exercises/workout/` + workoutId);
 
@@ -149,7 +151,7 @@ const WorkoutCard: React.FC<Props> = ( {workoutId, name, date, exerciseNames, de
                 <CardContent>
                     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                         <Typography sx={{ fontSize: 14 }} gutterBottom>
-                            {date}
+                            {format(Date.parse(date), 'yyyy-MM-dd')}
                         </Typography>
                         <IconButton onClick={() => {
                             deleteWorkout?.(workoutId);

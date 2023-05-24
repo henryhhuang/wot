@@ -8,20 +8,40 @@ import { isAuthenticated } from "../utils/authentication";
 export const workoutRouter = express.Router();
 workoutRouter.use(express.json());
 
-workoutRouter.get("/", isAuthenticated, async (req, res) => {
+workoutRouter.get("/length", isAuthenticated, async (req, res) => {
     try {
-        const workouts = await collections.workouts.find({userId: new mongodb.ObjectId(req.session.user._id)}).toArray();
-        res.status(200).send(workouts);
+        const length = await collections.
+            workouts.countDocuments( {
+                userId: new mongodb.ObjectId(req.session.user._id)
+        });
+
+        res.status(200).json(length);
     } catch (error) {
         res.status(500).send(error.message);
     }
- });
+});
+
+workoutRouter.get("/:page", isAuthenticated, async (req, res) => {
+    try {
+        const page = parseInt(req?.params?.page);
+        // const workouts = await collections.workouts.find({userId: new mongodb.ObjectId(req.session.user._id)}).toArray();
+        const workouts = await collections.
+            workouts.find({userId: new mongodb.ObjectId(req.session.user._id)})
+            .sort({ date: -1 })
+            .skip(page * 5)
+            .toArray();
+        
+        res.status(200).send(workouts.slice(0, 5));
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 workoutRouter.post("/", isAuthenticated, async (req, res) => {
     try {
         const workout = {
             name: req.body.name,
-            date: req.body.date,
+            date: new Date(req.body.date),
             exercises: req.body.exercises,
             userId: new mongodb.ObjectId(req.session.user._id)
         }
@@ -84,6 +104,6 @@ workoutRouter.delete("/:id", isAuthenticated, async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).send(error.messag);
+        res.status(500).send(error.message);
     }
 })

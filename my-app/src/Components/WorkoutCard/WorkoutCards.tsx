@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import React, { useEffect } from 'react';
 import WorkoutCard from "./WorkoutCard";
+import { Pagination } from "@mui/material";
 
 type ExerciseName = {
     _id?: number,
@@ -18,9 +19,26 @@ type Workout = {
 
 const WorkoutCards: React.FC = () => {
     const [workouts, setWorkouts] = React.useState<Workout[]>([]);
+    const [length, setLength] = React.useState<number>(0);
+    const [page, setPage] = React.useState<number>(1);
+
+    async function getWorkoutLength() {
+        const response = await fetch(`http://localhost:5200/workouts/length`, {
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            //TODO error response
+            console.log(`error: ${response.statusText}`);
+            return;
+        }
+        
+        const length = await response.json();
+        setLength(length);
+    }
 
     async function getWorkouts() {
-        const response = await fetch(`http://localhost:5200/workouts/`, {
+        const response = await fetch(`http://localhost:5200/workouts/` + (page - 1), {
             credentials: 'include',
         });
 
@@ -46,12 +64,23 @@ const WorkoutCards: React.FC = () => {
         getWorkouts();
     }
 
+    const handlePagination = (e: React.ChangeEvent<unknown>, value: number) => {
+        e.preventDefault();
+        setPage(value);
+    }
+
 
     useEffect(() => {
         getWorkouts();
 
         return;
-    }, [workouts.length])
+    }, [page])
+
+    useEffect(() => {
+        getWorkoutLength();
+
+        return;
+    })
 
     return (
             <Box
@@ -74,6 +103,7 @@ const WorkoutCards: React.FC = () => {
                         </Grid>
                     ))}
                 </Grid>
+                <Pagination count={Math.ceil(length / 5)} shape="rounded" onChange={handlePagination}/>
             </Box>
     )
 }

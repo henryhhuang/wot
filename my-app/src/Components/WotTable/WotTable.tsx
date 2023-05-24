@@ -46,6 +46,10 @@ const WotTable: React.FC<Props> = ( { _id, name, sets, addSet, removeSet} ) => {
                     reps: Number(repsRef.current.value)
                 }
             })
+
+            weightRef.current.value = "";
+            repsRef.current.value = "";
+
             return;
         }
 
